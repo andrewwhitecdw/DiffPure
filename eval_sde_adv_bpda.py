@@ -128,7 +128,7 @@ def eval_bpda(args, config, model, x_val, y_val, adv_batch_size, log_dir):
 
     # ------------------ apply the attack to resnet ------------------
     print(f'apply the bpda attack to resnet...')
-    resnet_bpda = ResNet_Adv_Model(args, config)
+    resnet_bpda = ResNet_Adv_Model(args, config).eval()
     if ngpus > 1:
         resnet_bpda = torch.nn.DataParallel(resnet_bpda)
 
