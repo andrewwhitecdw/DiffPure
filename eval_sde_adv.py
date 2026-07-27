@@ -112,7 +112,7 @@ def eval_autoattack(args, config, model, x_val, y_val, adv_batch_size, log_dir):
 
     # ---------------- apply the attack to classifier ----------------
     print(f'apply the attack to classifier [{args.lp_norm}]...')
-    classifier = get_image_classifier(args.classifier_name).to(config.device)
+    classifier = get_image_classifier(args.classifier_name).to(config.device).eval()
     adversary_resnet = AutoAttack(classifier, norm=args.lp_norm, eps=args.adv_eps,
                                   version=attack_version, attacks_to_run=attack_list,
                                   log_path=f'{log_dir}/log_resnet.txt', device=config.device)
@@ -166,7 +166,7 @@ def eval_stadv(args, config, model, x_val, y_val, adv_batch_size, log_dir):
 
     # apply the attack to resnet
     print(f'apply the stadv attack to resnet...')
-    resnet = get_image_classifier(args.classifier_name).to(config.device)
+    resnet = get_image_classifier(args.classifier_name).to(config.device).eval()
 
     start_time = time.time()
     init_acc = get_accuracy(resnet, x_val, y_val, bs=adv_batch_size)
